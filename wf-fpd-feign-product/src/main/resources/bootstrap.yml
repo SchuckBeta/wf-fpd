@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: wf-fpd-feign-product
+  cloud:
+    config:
+      profile: dev
+      label: master
+      discovery:
+        enabled: true                                 # 默认false，设为true表示使用注册中心中的configserver配置而不自己配置configserver的uri
+        serviceId: wf-fpd-config-eureka  # 指定config server在服务发现中的serviceId，默认为：configserver
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+  instance:
+    preferIpAddress: true
+ribbon:
+  eureka:
+    enabled: true         # 默认为true。如果设置为false，Ribbon将不会从Eureka中获得服务列表，而是使用静态配置的服务列表。静态服务列表可使用：<client>.ribbon.listOfServers来指定。参考：http://projects.spring.io/spring-cloud/docs/1.0.3/spring-cloud.html#spring-cloud-ribbon-without-eureka
