@@ -1,32 +1,32 @@
-package www.wanfin.com.user.controller;
+package www.wanfin.com.account.controller;
 
+import org.bytesoft.compensable.Compensable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import www.wanfin.com.user.entity.User;
-import www.wanfin.com.user.repository.UserRepository;
+
+import www.wanfin.com.account.entity.Account;
+import www.wanfin.com.account.service.AccountService;
 
 
-/**
- * 作用：
- * ① 测试服务实例的相关内容
- * ② 为后来的服务做提供
- * @author eacdy
- */
+
+@Compensable(interfaceClass = AccountService.class, confirmableKey = "transferServiceConfirm", cancellableKey = "transferServiceCancel")
 @RestController
-@RefreshScope/*** 这边的@RefreshScope注解不能少，否则即使调用/refresh，配置也不会刷新* @author eacdy*/
-public class UserController {
+public class AccountController {
   @Autowired
   private DiscoveryClient discoveryClient;
   @Autowired
-  private UserRepository userRepository;
+  private AccountService accountService;
   
   
   @Value("${foo}")
@@ -48,13 +48,17 @@ public class UserController {
    * @RequestMapping(value = "/id", method = RequestMethod.GET)
    * 类似的注解还有@PostMapping等等
    * @param id
+ * @return 
    * @return user信息
    */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-  @GetMapping("/{id}")
-  public User findById(@PathVariable Long id) {
-   // User findOne = this.userRepository.findOne(id);
-	User findOne = this.userRepository.getOne(id);
-    return findOne;
+  @ResponseBody
+  @RequestMapping(value = "/get", method = RequestMethod.POST)//----------扣钱
+  @Transactional
+  public Account increaseAmount(@RequestParam String id) {
+    // User findOne = this.userRepository.findOne(id);
+	//User findOne = this.userRepository.getOne(id);
+	Account account=accountService.get(id);;
+    return account;
   }
 
   /**

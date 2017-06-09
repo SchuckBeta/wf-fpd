@@ -30,7 +30,7 @@ public class FeignController {
   
   @GetMapping("feign/{id}")
   public User findByIdFeign(@PathVariable Long id) {
-  //  User user = this.userFeignClient.findByIdFeign(id);
+   // User user = this.userFeignClient.findByIdFeign(id);
     User user = this.userFeignHystrixClient.findByIdFeign(id);//熔断器方式
     return user;
   }

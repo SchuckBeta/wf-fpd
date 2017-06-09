@@ -10,7 +10,7 @@ import www.wanfin.com.user.entity.User;
  * 使用@FeignClient("microservice-provider-user")注解绑定microservice-provider-user服务，还可以使用url参数指定一个URL。
  * @author lzj
  */
-@FeignClient(name = "microservice-provider-user")
+@FeignClient(name = "wf-fpd-provider-product")
 public interface UserFeignClient {
   @RequestMapping("/{id}")
   public User findByIdFeign(@RequestParam("id") Long id);

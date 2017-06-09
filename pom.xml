@@ -42,14 +42,12 @@
   </build>
   <modules>
   	<module>fpd-eureka</module>
-    <module>wf-fpd-provider-product</module>
-    <module>wf-fpd-providers-credit</module>
+  	<module>wf-fpd-config-eureka</module>
+    <module>wf-fpd-api-gateway</module>
     <module>wf-fpd-provider-credit</module>
     <module>wf-fpd-feign-product</module>
-    <module>wf-fpd-feign-product-2</module>
     <module>wf-fpd-provider-product-2</module>
     <module>wf-fpd-provider-product-1</module>
-    <module>wf-fpd-config-eureka</module>
-    <module>wf-fpd-api-gateway</module>
+    <module>wf-fpd-provider-account</module>
   </modules>
 </project>

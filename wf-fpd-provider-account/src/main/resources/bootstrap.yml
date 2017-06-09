@@ -1,16 +1,12 @@
-server:
-  port: 8000
 spring:
   application:
-    name: wf-fpd-provider-product   # 项目名称尽量用小写
+    name: wf-fpd-provider-account   # 项目名称尽量用小写---# config时要对应config-server所获取的配置文件的{application}即远程文件
   cloud:
     config:
+      uri: http://discovery:8050/
+      profile: dev                      # 指定profile，对应microservice-config-server所获取的配置文件中的{profile} 
       label: master
-      profile: dev
-      discovery:
-        enabled: true  
-        #serviceId: wf-fpd-config-eureka 
-        #uri: http://discovery:8050 
+      
   jpa:
     generate-ddl: false
     show-sql: true
@@ -27,7 +23,8 @@ spring:
      maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) 
    
 mybatis:  
-  mapperLocations: classpath:mapper/*.xml  
+  mapperLocations: classpath:mapper/*.xml
+    
 logging:
   level:
     root: INFO

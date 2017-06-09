@@ -7,8 +7,8 @@
   <packaging>jar</packaging>
  
   <parent>
-    <groupId>com.itmuch.cloud</groupId>
-    <artifactId>spring-cloud-microservice-study</artifactId>
+    <groupId>www.wanfin.com</groupId>
+    <artifactId>wf-fpd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 

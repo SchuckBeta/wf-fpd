@@ -1,16 +1,12 @@
-server:
-  port: 8000
 spring:
   application:
-    name: wf-fpd-provider-product   # 项目名称尽量用小写
+    name: wf-fpd-provider-product   # 项目名称尽量用小写---# config时要对应config-server所获取的配置文件的{application}即远程文件
   cloud:
     config:
+      uri: http://discovery:8050/
+      profile: dev                      # 指定profile，对应microservice-config-server所获取的配置文件中的{profile} 
       label: master
-      profile: dev
-      discovery:
-        enabled: true  
-        #serviceId: wf-fpd-config-eureka 
-        #uri: http://discovery:8050 
+      
   jpa:
     generate-ddl: false
     show-sql: true

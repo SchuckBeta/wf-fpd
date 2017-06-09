@@ -10,5 +10,6 @@ import www.wanfin.com.user.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	/*public List<User> findList();*/
-	
+	/*@Query("select u from User u where u.sex=?1")
+	public List<User> getUsersBySex(String sex);*/
 }
