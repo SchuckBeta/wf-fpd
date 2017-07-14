@@ -1,11 +1,8 @@
 package www.wanfin.com.account.controller;
-
-import org.bytesoft.compensable.Compensable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,60 +11,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import www.wanfin.com.account.service.IAccountService;
 
-import www.wanfin.com.account.entity.Account;
-import www.wanfin.com.account.service.AccountService;
-
-
-
-@Compensable(interfaceClass = AccountService.class, confirmableKey = "transferServiceConfirm", cancellableKey = "transferServiceCancel")
+/**
+ * 作用： ① 测试服务实例的相关内容 ② 为后来的服务做提供
+ * 
+ * @author eacdy
+ *//*
 @RestController
-public class AccountController {
-  @Autowired
-  private DiscoveryClient discoveryClient;
-  @Autowired
-  private AccountService accountService;
-  
-  
-  @Value("${foo}")
-  String foo;
-  @RequestMapping(value = "/hi")
-  public String hi(){
-      return foo;
-  }
-  @Value("${foo}")
-  private String profile;
+@RefreshScope
+*//*** 这边的@RefreshScope注解不能少，否则即使调用/refresh，配置也不会刷新* @author eacdy*/
+@RestController
+public class AccountController{
+	@Autowired
+	private DiscoveryClient discoveryClient;
+	@Autowired
+	private IAccountService accountService;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	
+	
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	public void insert(@RequestParam("acctId") Long acctId) {
+		accountService.insert(acctId);
+	}
+	
+	
+/*	@ResponseBody
+	@RequestMapping(value = "/increase", method = RequestMethod.POST)
+	// 增加
+	@Transactional
+	public int increaseAmount(@RequestParam("acctId") String acctId,
+			@RequestParam("amount") double amount) {
+		int value = accountRepository.increaseAmount(acctId, amount);
+		if (value != 1) {
+			throw new IllegalStateException("ERROR!");
+		}
+		System.out.printf("exec increase: acct= %s, amount= %7.2f%n", acctId,
+				amount);
+		return value;
+	}*/
 
-  @GetMapping("/hello")
-  public String hello() {
-    return this.profile;
-  }
-  
-  /**
-   * 注：@GetMapping("/{id}")是spring 4.3的新注解等价于：
-   * @RequestMapping(value = "/id", method = RequestMethod.GET)
-   * 类似的注解还有@PostMapping等等
-   * @param id
- * @return 
-   * @return user信息
-   */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-  @ResponseBody
-  @RequestMapping(value = "/get", method = RequestMethod.POST)//----------扣钱
-  @Transactional
-  public Account increaseAmount(@RequestParam String id) {
-    // User findOne = this.userRepository.findOne(id);
-	//User findOne = this.userRepository.getOne(id);
-	Account account=accountService.get(id);;
-    return account;
-  }
+	/*@ResponseBody
+	@RequestMapping(value = "/decrease", method = RequestMethod.POST)
+	// 减少
+	@Transactional
+	public int decreaseAmount(@RequestParam("acctId") String acctId,
+			@RequestParam("amount") double amount) {
+		
+		int value=accountService.decreaseAmount(acctId, amount);
+		return value;
+		
+	}*/
 
-  /**
-   * 本地服务实例的信息
-   * @return
-   */
-  @GetMapping("/instance-info")
-  public ServiceInstance showInfo() {
-    ServiceInstance localServiceInstance = this.discoveryClient.getLocalServiceInstance();
-    return localServiceInstance;
-  }
+	/**
+	 * 本地服务实例的信息
+	 * 
+	 * @return
+	 */
+	@GetMapping("/instance-info")
+	public ServiceInstance showInfo() {
+		ServiceInstance localServiceInstance = this.discoveryClient
+				.getLocalServiceInstance();
+		return localServiceInstance;
+	}
 }

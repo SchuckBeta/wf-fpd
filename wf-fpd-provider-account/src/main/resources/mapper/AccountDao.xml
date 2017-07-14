@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="www.wanfin.com.account.dao.AccountDao" >
+
+  <resultMap id="BaseResultMap" type="www.wanfin.com.account.entity.Account" >
+    <id column="acct_id" property="acctId" jdbcType="INTEGER" />
+   
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    acc_id
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="www.wanfin.com.account.entity.Account" >
+    insert into account (acct_id)
+    values (#{acctId,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>

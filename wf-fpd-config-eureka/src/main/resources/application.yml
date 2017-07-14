@@ -10,7 +10,7 @@ spring:
           uri: https://github.com/leng0212/wf-fpd
           search-paths: config-repo
           username: leng0212@163.com
-          password: leng1992
+          password: leng2316
 eureka:
   client:
     serviceUrl:

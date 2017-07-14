@@ -1,37 +1,28 @@
 package www.wanfin.com.account.entity;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 
-@Entity
 public class Account {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String AccId;
+
+	private Long acctId;
+
+	private Double amount;
 	
-	@Column
-	private BigDecimal amount;
-
-	public String getAccId() {
-		return AccId;
+	
+	public Long getAcctId() {
+		return acctId;
 	}
-
-	public void setAccId(String accId) {
-		AccId = accId;
+	public void setAcctId(Long acctId) {
+		this.acctId = acctId;
 	}
-
-	public BigDecimal getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+	
+	
+   
 
 }
