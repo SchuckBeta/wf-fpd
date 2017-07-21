@@ -6,12 +6,6 @@ spring:
       uri: http://discovery:8050/
       profile: dev                      # 指定profile，对应microservice-config-server所获取的配置文件中的{profile} 
       label: master
-      
-  jpa:
-    generate-ddl: false
-    show-sql: true
-    hibernate:
-    ddl-auto: none
   datasource:                           # 指定数据源
      profiles: test
      url: jdbc:mysql://localhost:3306/test 
@@ -21,7 +15,6 @@ spring:
      hikari:  
      maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上  
      maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) 
-   
 mybatis:  
   mapperLocations: classpath:mapper/*.xml  
 logging:
@@ -52,4 +45,10 @@ ribbon:
   MaxAutoRetriesNextServer: 1
   eureka:
     enabled: true         # 默认为true。如果设置为false(无法通过@feignClient调用服务)，Ribbon将不会从Eureka中获得服务列表，而是使用静态配置的服务列表。静态服务列表可使用：<client>.ribbon.listOfServers来指定。参考：http://projects.spring.io/spring-cloud/docs/1.0.3/spring-cloud.html#spring-cloud-ribbon-without-eureka
-    
+rabbitmq:
+    host: 127.0.0.1
+    port: 15672
+    username: root
+    password: 123456 
+sleuth:
+      enabled:true

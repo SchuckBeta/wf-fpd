@@ -49,5 +49,9 @@
     <module>wf-fpd-provider-product-2</module>
     <module>wf-fpd-provider-product-1</module>
     <module>wf-spring-core</module>
+    <module>wf-fpd-common</module>
+    <module>wf-fpd-zipkin-server</module>
+    <module>wf-fpd-api</module>
+    <module>wf-fpd-rabbitmq</module>
   </modules>
 </project>

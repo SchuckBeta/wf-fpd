@@ -65,4 +65,13 @@ public class UserController {
     ServiceInstance localServiceInstance = this.discoveryClient.getLocalServiceInstance();
     return localServiceInstance;
   }*/
+  
+  @RequestMapping("/do1/{id}")  
+  public String hi(@PathVariable("id") String id) throws Exception {  
+      System.out.println("do1"+id);  
+      Thread.sleep(50L);  
+        
+      return "the "+id+" cycle in order  do1";  
+  }  
+  
 }
