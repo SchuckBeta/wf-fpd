@@ -25,7 +25,7 @@
 
 
 	<dependencies>
-	
+	    
 	    <!--     暂时放在上面 -->
          <dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -92,7 +92,12 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
+         <dependency>
+		    <groupId>com.alibaba</groupId>
+  		    <artifactId>fastjson</artifactId>
+  		    <version>1.1.28</version>
+	    </dependency>
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

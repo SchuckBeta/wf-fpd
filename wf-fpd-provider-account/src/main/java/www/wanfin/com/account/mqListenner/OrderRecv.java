@@ -1,4 +1,4 @@
-package www.wanfin.com.demo.bussiness;
+package www.wanfin.com.account.mqListenner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import www.wanfin.com.demo.util.MessageFatalExceptionStrategy;
  *
  */
 @Component
-@RabbitListener(queues = "${spring.rabbitmq.queueName}")
+@RabbitListener(queues = "${rabbitmq.queueName}")
 public class OrderRecv {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderRecv.class);
@@ -35,6 +35,7 @@ public class OrderRecv {
 	@MessageCache(cacheName="order",cacheKey="message",messageArgMapper="message")
 	@RabbitHandler
     public void receive(String message,Channel channel) {
+		System.out.println(message);
 		CacheMessage cacheMessage=JSONObject.parseObject(message, CacheMessage.class);
 		try{
 			/*logger.debug("消息处理！" + message);
@@ -45,7 +46,6 @@ public class OrderRecv {
 			MessageCacheUtil.remove(cacheMessage.getCacheCorrelationData().getCacheName(),cacheMessage.getCacheCorrelationData().getId());*/
 			JSONObject ob=(JSONObject)cacheMessage.getPayload();
 			System.out.println(ob.get("id"));
-			System.out.println(ob.get("otherInfo"));
 			MessageCacheUtil.remove(cacheMessage.getCacheCorrelationData().getCacheName(),cacheMessage.getCacheCorrelationData().getId());
 			
 			

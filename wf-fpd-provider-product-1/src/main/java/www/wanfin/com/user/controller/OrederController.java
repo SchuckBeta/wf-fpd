@@ -1,10 +1,14 @@
 package www.wanfin.com.user.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +52,26 @@ public class OrederController{
      public void send(String key,String content) {
          amqpTemplate.convertAndSend(key, content); 
      }
+     
+     
+ 	@Autowired
+ 	private IOrderService orderService;
+ 	
+ 	@RequestMapping(value = "/rest/order/{id}/{accId}",
+ 			method = RequestMethod.GET, 
+ 			produces = MediaType.TEXT_PLAIN_VALUE+";charset=UTF-8")
+ 	public void saveOrder(@PathVariable String id,@PathVariable String accId,HttpServletRequest request,HttpServletResponse response){
+ 		OrderInfo order=new OrderInfo();
+     	order.setId(id);
+ 		order.setAccId(accId);
+ 		try {
+ 			orderService.sendOrderMessage(id,order);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			System.out.println("返回错误信息到客户端");
+ 		}
+ 	}
+     
      
      @RequestMapping(value = "/order-info/{id}", method = RequestMethod.GET)
      public String service1(@PathVariable("id") String id,ModelMap model) throws Exception {  

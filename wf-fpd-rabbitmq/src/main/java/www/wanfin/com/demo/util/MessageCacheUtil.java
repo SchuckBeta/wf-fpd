@@ -15,8 +15,14 @@ public class MessageCacheUtil {
 	}
 	
 	public static void remove(String cacheName,String key){
+		System.out.println("cacheName================="+cacheName);
     	Map<String,Object> cache=MessageCacheManager.instance().get(cacheName);
-    	cache.remove(key);
+    	System.out.println("cache=========================="+cache);
+    	System.out.println("key===================================="+key);
+    	if(cache!=null){
+    		cache.remove(key);
+    	}
+    	
 	}
 	
 }

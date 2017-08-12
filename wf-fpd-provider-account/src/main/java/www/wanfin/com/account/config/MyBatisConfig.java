@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -24,14 +25,19 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 */
 @Configuration
 @MapperScan(basePackages="www.wanfin.com.account.dao")
-public class MyBatisConfig {
+public class MyBatisConfig implements EnvironmentAware{
 
     @Autowired
     private Environment env;
+    
+    
+    public void setEnvironment(Environment environment) {
+        this.env=environment;
+    }
 
     /**  
     * @Title: getDataSource  
-    * @Description: 创建数据源 
+    * @Description: 创建数据源 ---------------------
     * @param @return 
     * @return DataSource
     * @throws  

@@ -1,7 +1,5 @@
 package www.wanfin.com.demo.util;
 
-import java.util.UUID;
-
 import org.springframework.amqp.rabbit.support.CorrelationData;
 
 import com.alibaba.fastjson.annotation.JSONCreator;

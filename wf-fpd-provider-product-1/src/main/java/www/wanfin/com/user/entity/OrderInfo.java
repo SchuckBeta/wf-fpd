@@ -12,6 +12,9 @@ import javax.persistence.Id;
 public class OrderInfo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	String id;
+	
+	@Column
 	private Long orderId;
 	@Column
 	private String accId;
@@ -26,6 +29,12 @@ public class OrderInfo implements Serializable{
 	}
 	public void setAccId(String accId) {
 		this.accId = accId;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

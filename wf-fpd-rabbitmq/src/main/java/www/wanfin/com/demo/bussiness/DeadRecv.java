@@ -99,8 +99,7 @@ public class DeadRecv {
 				//由于致命错误，为了防止负载均衡的轮询策略，路由到其他消费者，造成大量消费者瘫痪，直接丢弃该消息
 				logger.info("消息被拒绝！"+message);
 				logger.info("通知管理员并写入数据库(注意去重)");
-			}
-			else if(reason.equals(MAXLEN)){
+			}else if(reason.equals(MAXLEN)){
 				logger.info("队列已满，消息转发！"+queue);
 				//利用负载均衡的轮询策略，重发消息
 				rabbitTemplate.send(exchange, key, msg, correlationId);

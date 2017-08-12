@@ -7,46 +7,30 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
-import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.SimpleRoutingConnectionFactory;
-import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.core.RabbitTemplate.ReturnCallback;
 import org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.retry.RepublishMessageRecoverer;
-import org.springframework.amqp.support.converter.DefaultClassMapper;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 import org.springframework.util.ErrorHandler;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.rabbitmq.client.Channel;
 import www.wanfin.com.demo.pojo.CacheMessage;
 import www.wanfin.com.demo.pojo.MetaMessage;
-import www.wanfin.com.demo.pojo.Order;
 import www.wanfin.com.demo.props.RabbitmqProps;
 import www.wanfin.com.demo.util.AttactMessageFilter;
 import www.wanfin.com.demo.util.CacheCorrelationData;
@@ -54,11 +38,7 @@ import www.wanfin.com.demo.util.MessageCacheManager;
 import www.wanfin.com.demo.util.MessageCacheUtil;
 import www.wanfin.com.demo.util.MessageFatalExceptionStrategy;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.alibaba.fastjson.JSON;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -85,7 +65,7 @@ public class AmqpConfig {
 	 * @return
 	 */
 	@Bean
-	@ConfigurationProperties(prefix="spring.rabbitmq")   
+	@ConfigurationProperties(prefix="rabbitmq")   
     public ConnectionFactory connectionFactory() {  
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();  
         //防止信道缓存不够造成消息丢失，官方推荐100可完全避免此丢失消息情况
@@ -156,7 +136,7 @@ public class AmqpConfig {
 	                	}
 	                	//找到队列
 	                	else{
-	                		logger.debug("清除重发缓存！");
+	                		logger.debug("清除重发缓存1！");
 	                		MessageCacheUtil.remove(cacheName, cacheKey);
 	                		
 	                		logger.debug("清除备份缓存！"); 
@@ -165,7 +145,7 @@ public class AmqpConfig {
 	                }
 	                //找到队列
 	                else{
-	                	logger.debug("清除重发缓存！");
+	                	logger.debug("清除重发缓存2！");
                 		MessageCacheUtil.remove(cacheName, cacheKey);
 	                }
 	               
@@ -211,7 +191,7 @@ public class AmqpConfig {
 					  ",routingKey:"+routingKey);
         	
         	//从缓存中移除
-        	logger.debug("清除重发缓存！"); 
+        	logger.debug("清除重发缓存3！"); 
         	String messageJsonstr=new String(message.getBody());
         	CacheMessage cacheMessage=JSON.parseObject(messageJsonstr,CacheMessage.class);
         	String cacheName=cacheMessage.getCacheCorrelationData().getCacheName();
@@ -284,6 +264,9 @@ public class AmqpConfig {
     	Map<String,Object> params=new HashMap<String,Object>();
     	params.put("x-dead-letter-exchange", "dlxExchange");
     	params.put("x-message-ttl", 6000);
+    	/*if(rabbitmqProps.getQueueName()==null){
+    		rabbitmqProps.setQueueName("");
+    	}*/
         return new Queue(rabbitmqProps.getQueueName(), true, false, false,params); 
     }  
     

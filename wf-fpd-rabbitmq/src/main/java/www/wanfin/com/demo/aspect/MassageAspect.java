@@ -49,7 +49,7 @@ public class MassageAspect {
 	 * @throws Throwable 
 	 */
 	//spring 切面注解的顺序@before 拦截方法前执行  @Around( 要代理的方法执行在其中)前后都执行  @AfterReturning @after拦截方法后执行
-	@Around("execution(* www.wanfin.com.demo.bussiness..send*Message(..))")
+	@Around("execution(* www.wanfin.com..send*Message(..))")
 	public void aroundSendMessage(ProceedingJoinPoint point) throws Throwable{
 		Signature sig = point.getSignature();
         if (!(sig instanceof MethodSignature)) {
