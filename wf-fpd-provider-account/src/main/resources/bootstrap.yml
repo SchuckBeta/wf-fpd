@@ -6,7 +6,11 @@ spring:
       uri: http://discovery:8050/
       profile: dev                      # 指定profile，对应microservice-config-server所获取的配置文件中的{profile} 
       label: master
-  
+  zipkin:
+    base-url: http://discovery:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0  
   
 jdbc:
   driverClassName: com.mysql.jdbc.Driver
@@ -49,5 +53,3 @@ rabbitmq:
     keys:
       orderRouting: www.wanfin.com.bussiness.order.*
     exchange: orderExchange
-sleuth:
-      enabled:true   
