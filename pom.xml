@@ -42,16 +42,16 @@
   </build>
   <modules>
   	<module>fpd-eureka</module>
+  	<module>wf-fpd-core</module>
+  	<module>wf-fpd-rabbitmq</module>
   	<module>wf-fpd-config-eureka</module>
     <module>wf-fpd-api-gateway</module>
     <module>wf-fpd-provider-account</module>
     <module>wf-fpd-feign-product</module>
     <module>wf-fpd-provider-product-2</module>
     <module>wf-fpd-provider-product-1</module>
-    <module>wf-spring-core</module>
-    <module>wf-fpd-common</module>
+  <!--   <module>wf-fpd-common</module> -->
     <module>wf-fpd-zipkin-server</module>
-    <module>wf-fpd-api</module>
-    <module>wf-fpd-rabbitmq</module>
+  <!--   <module>wf-fpd-api</module> -->
   </modules>
 </project>

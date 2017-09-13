@@ -15,6 +15,18 @@
 
 
 	<dependencies>
+	
+	  <!--   <dependency>
+			<groupId>www.wanfin.com</groupId>
+			<artifactId>wf-fpd-caore</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency> -->
+		 <dependency>
+			<groupId>www.wanfin.com</groupId>
+			<artifactId>wf-fpd-rabbitmq</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 	     <!--     暂时放在上面 -->
          <dependency>
 			<groupId>org.springframework.cloud</groupId>

@@ -9,12 +9,14 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSONObject;
-import com.rabbitmq.client.Channel;
 import www.wanfin.com.demo.annotation.MessageCache;
 import www.wanfin.com.demo.pojo.CacheMessage;
 import www.wanfin.com.demo.util.MessageCacheUtil;
 import www.wanfin.com.demo.util.MessageFatalExceptionStrategy;
+
+import com.alibaba.fastjson.JSONObject;
+import com.rabbitmq.client.Channel;
+
 
 /**
  * 

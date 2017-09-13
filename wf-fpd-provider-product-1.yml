@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+     eureka1:
+        build: ./wf-fpd-eureka
+        image: prontera/eureka-registry-ms
+        ports:
+            - "8761:8761"
+        environment:
+            - TZ=Asia/Shanghai
+        command: "--spring.profiles.active=peer2"
+    wf-fpd-provider-product:
+        build: ./ wf-fpd-provider-product-1
+        image: prontera/eureka-registry-ms
+        ports:
+            - "8000:8000"
+        depends_on:
+            - 'jce_java'
+        environment:
+            - TZ=Asia/Shanghai
+        command: "--spring.profiles.active=peer1"
+   
+    config_server:
+        build: ./config-ms
+        image: prontera/config-server-ms
+        ports:
+            - "10888:10888"
+            - "10481:10481"
+        depends_on:
+            - 'jce_java'
+            - 'eureka1'
+            - 'eureka2'
+        healthcheck:
+           test: ["CMD", "curl", "-f", "http://localhost:8763"]
+           interval: 30s
+           timeout: 30s
+           retries: 3
+        environment:
+            - TZ=Asia/Shanghai

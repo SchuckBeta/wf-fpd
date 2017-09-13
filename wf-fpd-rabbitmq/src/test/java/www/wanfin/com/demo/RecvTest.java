@@ -15,7 +15,7 @@ public class RecvTest {
 	
 	private static String QUEUE_NAME="testQueue";
 
-	public static void main(String[] argv) throws Exception{
+/*	public static void main(String[] argv) throws Exception{
 		
 	   // 1、创建rabbitmq服务连接
        // 2、建立到队列的channel
@@ -46,6 +46,6 @@ public class RecvTest {
     	};
     	channel.basicConsume(QUEUE_NAME, true, consumer);
     	
-	}
+	}*/
 	
 }

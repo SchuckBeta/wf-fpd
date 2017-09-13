@@ -9,7 +9,7 @@ public class SendTest {
 	
 	private static String QUEUE_NAME="testQueue";
 
-	public static void main(String[] argv) throws Exception{
+/*	public static void main(String[] argv) throws Exception{
 		//create connection
 		 // 1、创建rabbitmq服务连接
 	      // 2、创建连接队列的channel
@@ -35,6 +35,6 @@ public class SendTest {
 		//finally
 		channel.close();
 		connection.close();
-	}
+	}*/
 	
 }
